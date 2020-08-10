@@ -18,18 +18,43 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-    public static UserInfo getUser(String status) {
-        Faker faker = new Faker(new Locale("ru"));
+    public static String login(String Locale) {
+        Faker faker = new Faker(new Locale(Locale));
+        return faker.name().firstName();
+    }
 
-        UserInfo registration = new UserInfo(faker.name().firstName(),
-                faker.internet().password(), status);
+    public static String password(String Locale) {
+        Faker faker = new Faker(new Locale(Locale));
+        return faker.internet().password();
+    }
+
+    public static UserInfo getUser(String status) {
+
+        UserInfo user = new UserInfo(login("en"),
+                password("en"), status);
         given()
                 .spec(requestSpec)
-                .body(registration)
+                .body(user)
                 .when()
                 .post("/api/system/users")
                 .then()
                 .statusCode(200);
-        return registration;
+        return user;
+    }
+
+    public static UserInfo getInvalidLoginUser(String status) {
+        String password = password("en");
+        UserInfo user = new UserInfo("Robin", password, status);
+        getUser(status);
+
+        return new UserInfo("Roger", password, status);
+    }
+
+    public static UserInfo getInvalidPasswordUser(String status) {
+        String login = login("en");
+        UserInfo user = new UserInfo(login, "qwerty", status);
+        getUser(status);
+
+        return new UserInfo(login, "qwerty123", status);
     }
 }
