@@ -44,17 +44,15 @@ public class DataGenerator {
 
     public static UserInfo getInvalidLoginUser(String status) {
         String password = password("en");
-        UserInfo user = new UserInfo("Robin", password, status);
         getUser(status);
 
-        return new UserInfo("Roger", password, status);
+        return new UserInfo("Table", password, status);
     }
 
     public static UserInfo getInvalidPasswordUser(String status) {
         String login = login("en");
-        UserInfo user = new UserInfo(login, "qwerty", status);
         getUser(status);
 
-        return new UserInfo(login, "qwerty123", status);
+        return new UserInfo(login, "theSimplestPassword", status);
     }
 }
