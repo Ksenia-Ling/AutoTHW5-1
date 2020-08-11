@@ -36,24 +36,24 @@ public class RegistrationFormTest {
 
     @Test
     void shouldNotRegisterInvalidLogin() {
-        UserInfo invalidLoginUserInfo = DataGenerator.getInvalidLoginUser("active");
+        UserInfo user = DataGenerator.getUser("active");
 
         open("http://localhost:9999");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=login] input").setValue(invalidLoginUserInfo.getLogin());
-        form.$("[data-test-id=password] input").setValue(invalidLoginUserInfo.getPassword());
+        form.$("[data-test-id=login] input").setValue(DataGenerator.getLogin("en"));
+        form.$("[data-test-id=password] input").setValue(user.getPassword());
         form.$(".button").click();
         $(withText("Неверно указан логин или пароль")).shouldBe(exist);
     }
 
     @Test
     void shouldNotRegisterInvalidPassword() {
-        UserInfo invalidPasswordUserInfo = DataGenerator.getInvalidPasswordUser("active");
+        UserInfo user = DataGenerator.getUser("active");
 
         open("http://localhost:9999");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=login] input").setValue(invalidPasswordUserInfo.getLogin());
-        form.$("[data-test-id=password] input").setValue(invalidPasswordUserInfo.getPassword());
+        form.$("[data-test-id=login] input").setValue(user.getLogin());
+        form.$("[data-test-id=password] input").setValue(DataGenerator.getPassword("en"));
         form.$(".button").click();
         $(withText("Неверно указан логин или пароль")).shouldBe(exist);
     }
